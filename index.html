@@ -6,20 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>
     <script src="https://unpkg.com/vue@next"></script>
     <title>Parkeringspladser</title>
 </head>
 
 <body>
-    <h1>Parkeringspladser</h1>
-    <div id="app">
-        <h2>List of all parkingspots</h2>
-        <ul v-if="parkings">
-            <li v-for="parking in parkings">
-                <!-- shows last 5 books -->
-                Ledige pladser: {{parking.ledige}}, Optagede pladser: {{parking.optagede}}
-            </li>
+    <div id="app" class="container">
+    <div class="titles">       
+        <h1>Parkeringspladser</h1>
+        <h3>List of all parkingspots</h2>
+    </div>
+        <ul v-if="parkings" class="parkingList">
+            <li v-for="parking in parkings"><b>Ledige pladser:</b> {{parking.pladser}}</li>  
+            <li v-for="parking in parkings"><b>Optagede pladser:</b> {{parking.optagede}}</li>
         </ul>
         <div v-else>No spots</div>
     </div>
