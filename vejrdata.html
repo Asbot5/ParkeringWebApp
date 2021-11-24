@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>Vejr data</title>
+</head>
+
+<body>
+    <div class="topBorder"></div>
+
+    <div id="app" class="container">
+    <div class="titles">       
+        <h1 style="color: #0F398B;">Vejret</h1>
+        <h5>Maglegårdsvej 2, 4000 Roskilde</h5>
+        <h3>Vejr Data</h3>
+        <div class="container">
+            <!-- Viser vejr data fra vores database. -->
+            <table class="table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Tidspunkt</th>
+                        <th>Retning</th>
+                        <th>Nedbør</th>
+                        <th>Temperatur</th>
+                        <th>Vindhastighed</th>
+                    </tr>
+                </thead>
+                <tr v-for="vejr in vejrDataer">
+                    <td>{{vejr.tidspunkt}}</td>
+                    <td>{{vejr.retning}}</td>
+                    <td>{{vejr.nedbør}}</td>
+                    <td>{{vejr.temperatur}}</td>
+                    <td>{{vejr.vindhastighed}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    </div>
+    <script src="js/vejrdata.js"></script>
+    <footer class="footer">
+        "Vejrdata" er udarbejdet af Aksel Schøller Larsen, Alexander Grydgaard, Asmus Skafte Böttcher, Emil Wilhelm Winther og Jonas Kristensen
+    </footer>
+</body>
+
+</html>
