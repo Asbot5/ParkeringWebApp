@@ -6,13 +6,35 @@ font-family: sans-serif;
 
 .container{
     width: 50%;
-    margin-top: 5%;
+    margin-top: 2%;
 }
 
 .titles{
     text-align: center;
+    margin-bottom: 8%;
+}
+
+.parkingList {
+    width: 50%;
+    margin:auto;
 }
 
 .parkingList li{
     font-size: 1.5em;
+    list-style-type: none;
+}
+
+.topBorder {
+    height: 30px;
+    width: 100%;
+    background-color: #0F398B;
+}
+
+.footer {
+    height: 30px;
+    width: 100%;
+    text-align: center;
+    color: #808080;
+    position: fixed;
+    bottom: 0;
 }

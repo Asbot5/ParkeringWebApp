@@ -13,18 +13,26 @@
 </head>
 
 <body>
+    <div class="topBorder"></div>
+
     <div id="app" class="container">
     <div class="titles">       
-        <h1>Parkeringspladser</h1>
-        <h3>List of all parkingspots</h2>
+        <h1 style="color: #0F398B;">Parkeringsforhold</h1>
+        <h3>Ledige parkeringspladser på Zealand Erhvervsakademi</h3>
+        <h5>Maglegårdsvej 2, 4000 Roskilde</h5>
     </div>
-        <ul v-if="parkings" class="parkingList">
-            <li v-for="parking in parkings"><b>Ledige pladser:</b> {{parking.pladser}}</li>  
-            <li v-for="parking in parkings"><b>Optagede pladser:</b> {{parking.optagede}}</li>
-        </ul>
+
+            <ul v-if="parkings" class="parkingList">
+                <li v-for="parking in parkings">Ledige pladser<br><i style="color: green; font-size: 1.5em;">{{parking.pladser - parking.optagede}}</i></li>
+                <br><br>
+                <li v-for="parking in parkings">Optagede pladser<br> <i style="color: #0F398B; font-size: 1.5em;">{{parking.optagede}}</i></li>
+            </ul>
         <div v-else>No spots</div>
     </div>
     <script src="js/index.js"></script>
+    <footer class="footer">
+        "Parkeringsforhold" er udarbejdet af Aksel Schøller Larsen, Alexander Grydgaard, Asmus Skafte Böttcher, Emil Wilhelm Winther og Jonas Kristensen
+    </footer>
 </body>
 
 </html>
