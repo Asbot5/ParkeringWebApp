@@ -1,11 +1,17 @@
 // use https (http secure).
 // http (non secure) will make the app complain about mixed content when running the app from Azure
 const baseUrl = "https://dmigw.govcloud.dk/v2/metObs/collections/observation/items?api-key=9c03456a-00ce-48db-a13b-907255c2eb73&stationId=06184&datetime=2021-11-23T00:00:00Z/2021-11-24T00:00:00Z&parameterId=temp_mean_past1h"
-
+class vejrData{
+    constructor (regnData,tempData,vindData){
+        this.regnData =regnData
+        this.tempData =tempData
+        this.vindData =vindData
+    }
+}
 Vue.createApp({
     data() {
         return {
-            vejrDataer: [],
+            vejrData: null,
             specifikVejrDato: null,
             singleVejr: null,
             addData: { title: "", price: 0 },
@@ -19,67 +25,48 @@ Vue.createApp({
     },
     async created() {
         try {
-            const response = await axios.get(baseUrl)
-            this.vejrDataer = await response.data
-            console.log(this.vejrDataer)
+            this.vejrData = new vejrData(null, null, null)
+            await this.getRegnData()
+            await this.getTempData()
+            //await this.getVindData()
+            console.log(this.vejrData)
         } catch (ex) {
             alert(ex.message)
         }
     },
     methods: {
-        async helperGetAndShow(url) {
+        
+        async getRegnData() {
+            const current = new Date();
+            const url = "https://dmigw.govcloud.dk/v2/metObs/collections/observation/items?api-key=9c03456a-00ce-48db-a13b-907255c2eb73&stationId=06184&" + `datetime=${current.getFullYear()}`+"-"+`${current.getMonth()}`+"-"+`${current.getDate()-1}`+"T00:00:00Z/"+`${current.getFullYear()}`+"-"+`${current.getMonth()}`+"-"+`${current.getDate()}`+"T00:00:00Z&"+"parameterId=precip_past1h"
             try {
                 const response = await axios.get(url)
-                this.vejrDataer = await response.data
+                regnDataer = await response.data
+                this.vejrData.regnData = regnDataer.features[0]
             } catch (ex) {
                 alert(ex.message)
             }
         },
-        getAllVejrDataer() {
-            this.helperGetAndShow(baseUrl)
-        },
-        calculateParkingSpots() {
-
-        },
-        async getVejrByDato(id) {
-            const url = baseUrl + "/" + id
+        async getTempData() {
+            const current = new Date();
+            const url = "https://dmigw.govcloud.dk/v2/metObs/collections/observation/items?api-key=9c03456a-00ce-48db-a13b-907255c2eb73&stationId=06184&" + `datetime=${current.getFullYear()}`+"-"+`${current.getMonth()}`+"-"+`${current.getDate()-1}`+"T00:00:00Z/"+`${current.getFullYear()}`+"-"+`${current.getMonth()}`+"-"+`${current.getDate()}`+"T00:00:00Z&"+"parameterId=temp_mean_past1h"
             try {
                 const response = await axios.get(url)
-                this.singleVejr = await response.data
+                tempDataer = await response.data
+                this.vejrData.tempData = tempDataer.features[0]
             } catch (ex) {
                 alert(ex.message)
             }
         },
-        async addVejr() {
-            console.log(this.addData)
+        async getVindData() {
+            const current = new Date();
+            const url = "https://dmigw.govcloud.dk/v2/metObs/collections/observation/items?api-key=9c03456a-00ce-48db-a13b-907255c2eb73&stationId=06184&" + `datetime=${current.getFullYear()}`+"-"+`${current.getMonth()}`+"-"+`${current.getDate()-1}`+"T00:00:00Z/"+`${current.getFullYear()}`+"-"+`${current.getMonth()}`+"-"+`${current.getDate()}`+"T00:00:00Z&"+"parameterId=wind_speed"
             try {
-                response = await axios.post(baseUrl, this.addData)
-                this.addMessage = "response " + response.status + " " + response.statusText
-                this.getAllVejrDater()
+                const response = await axios.get(url)
+                vindDataer = await response.data
+                this.vejrData.vindData = vindDataer.features[0].properties.value
             } catch (ex) {
                 alert(ex.message)
             }
-        },
-        async deleteVejrByDato(idToDelete) {
-            const url = baseUrl + "/" + idToDelete
-            try {
-                response = await axios.delete(url)
-                this.deleteMessage = response.status + " " + response.statusText
-                this.getAllVejrDataer()
-            } catch (ex) {
-                alert(ex.message)
-            }
-        },
-        async updateParking() {
-            console.log(this.updateData)
-            const url = baseUrl + "/" + this.idToUpdate
-            try {
-                response = await axios.put(url, this.updateData)
-                this.updateMessage = "response " + response.status + " " + response.statusText
-                this.getAllVejrDataer()
-            } catch (ex) {
-                alert(ex.message)
-            }
-        }
-    }
+        },}
 }).mount("#app")
