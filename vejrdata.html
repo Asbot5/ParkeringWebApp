@@ -34,7 +34,8 @@
                 </thead>
                 <tr v-for="vejr in vejrDataer">
                     <td>{{vejr.tidspunkt}}</td>
-                    <td>{{vejr.retning}}</td>
+                    <td v-if="vejr.retning === false">Ud</td>
+                    <td v-else-if="vejr.retning === true">Ind</td>
                     <td>{{vejr.nedbør}}</td>
                     <td>{{vejr.temperatur}}</td>
                     <td>{{vejr.vindhastighed}}</td>
