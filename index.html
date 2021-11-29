@@ -16,21 +16,51 @@
     <div class="topBorder"></div>
 
     <div id="app" class="container">
-    <div class="titles">       
-        <h1 style="color: #0F398B;">Parkeringsforhold</h1>
-        <h3>Ledige parkeringspladser på Zealand Erhvervsakademi</h3>
-        <h5>Maglegårdsvej 2, 4000 Roskilde</h5>
-        <a href="vejrdata.html">Se vejret</a>
+        <div class="titles">
+            <h1 style="color: #0F398B;">Parkeringsforhold</h1>
+            <h3>Ledige parkeringspladser på Zealand Erhvervsakademi</h3>
+            <h5>Maglegårdsvej 2, 4000 Roskilde</h5>
+        </div>
+
+        <div class="row">
+
+            <div class="col-sm">
+                <ul v-if="parkings" class="parkingList">
+                    <li v-for="parking in parkings">Ledige pladser<br><i style="color: green; font-size: 1.5em;">{{parking.pladser - parking.optagede}}</i></li>
+                    <br>
+                    <br>
+                    <li v-for="parking in parkings">Optagede pladser<br> <i style="color: #0F398B; font-size: 1.5em;">{{parking.optagede}}</i></li>
+                </ul>
+                <div v-else>No spots</div>
+            </div>
+
+            <div class="col-sm">
+                <table class="table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Tidspunkt</th>
+                            <th>Retning</th>
+                            <th>Nedbør</th>
+                            <th>Temperatur</th>
+                            <th>Vindhastighed</th>
+                        </tr>
+                    </thead>
+                    <tr v-for="vejr in vejrDataer">
+                        <td>{{vejr.tidspunkt}}</td>
+                        <td>{{vejr.retning}}</td>
+                        <td>{{vejr.nedbør}}</td>
+                        <td>{{vejr.temperatur}}</td>
+                        <td>{{vejr.vindhastighed}}</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
     </div>
 
-            <ul v-if="parkings" class="parkingList">
-                <li v-for="parking in parkings">Ledige pladser<br><i style="color: green; font-size: 1.5em;">{{parking.pladser - parking.optagede}}</i></li>
-                <br><br>
-                <li v-for="parking in parkings">Optagede pladser<br> <i style="color: #0F398B; font-size: 1.5em;">{{parking.optagede}}</i></li>
-            </ul>
-        <div v-else>No spots</div>
-    </div>
     <script src="js/index.js"></script>
+    <script src="js/vejrdata.js"></script>
     <footer class="footer">
         "Parkeringsforhold" er udarbejdet af Aksel Schøller Larsen, Alexander Grydgaard, Asmus Skafte Böttcher, Emil Wilhelm Winther og Jonas Kristensen
     </footer>
