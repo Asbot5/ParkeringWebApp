@@ -15,8 +15,10 @@ font-family: sans-serif;
 }
 
 .parkingList {
-    width: 50%;
-    margin:auto;
+    margin: auto;
+    border: 2px solid lightgrey;
+    padding-top: 4%;
+    padding-bottom: 4%;
 }
 
 .parkingList li{
