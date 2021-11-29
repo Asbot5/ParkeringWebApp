@@ -32,12 +32,12 @@
                         <th>Vindhastighed</th>
                     </tr>
                 </thead>
-                <tr v-for="vejr in vejrDataer">
-                    <td>{{vejr.tidspunkt}}</td>
-                    <td>{{vejr.retning}}</td>
-                    <td>{{vejr.nedbør}}</td>
-                    <td>{{vejr.temperatur}}</td>
-                    <td>{{vejr.vindhastighed}}</td>
+                <tr v-for="vejr in vejrDataer.features.slice(0,1)">
+                    <td>Intet tidspunkt endnu</td>
+                    <td>Ingen retning</td>
+                    <td>Ingen nedbør</td>
+                    <td>{{vejr.properties.value}}°C</td>
+                    <td>Ingen vindhastighed</td>
                 </tr>
             </table>
         </div>

@@ -1,6 +1,6 @@
 // use https (http secure).
 // http (non secure) will make the app complain about mixed content when running the app from Azure
-const baseUrl = "https://parkeringsdataapi.azurewebsites.net/log"
+const baseUrl = "https://dmigw.govcloud.dk/v2/metObs/collections/observation/items?api-key=9c03456a-00ce-48db-a13b-907255c2eb73&stationId=06184&datetime=2021-11-23T00:00:00Z/2021-11-24T00:00:00Z&parameterId=temp_mean_past1h"
 
 Vue.createApp({
     data() {
