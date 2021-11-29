@@ -6,6 +6,8 @@ Vue.createApp({
     data() {
         return {
             vejrDataer: [],
+            regnData: [],
+            vindData: [],
             specifikVejrDato: null,
             singleVejr: null,
             addData: { title: "", price: 0 },
@@ -19,9 +21,11 @@ Vue.createApp({
     },
     async created() {
         try {
-            const response = await axios.get(baseUrl)
-            this.vejrDataer = await response.data
-            console.log(this.vejrDataer)
+            //const response = await axios.get(baseUrl)
+            await this.getTempData()
+            await this.getRegnData()
+            await this.getVindData()
+            console.log(this.vejrDataer, this.regnData)
         } catch (ex) {
             alert(ex.message)
         }
@@ -41,35 +45,37 @@ Vue.createApp({
         calculateParkingSpots() {
 
         },
-        async getVejrByDato(id) {
-            const url = baseUrl + "/" + id
+        async getTempData() {
+            const current = new Date();
+            const url = "https://dmigw.govcloud.dk/v2/metObs/collections/observation/items?api-key=9c03456a-00ce-48db-a13b-907255c2eb73&stationId=06184&" + `datetime=${current.getFullYear()}`+"-"+`${current.getMonth()+1}`+"-"+`${current.getDate()-1}`+"T00:00:00Z/"+`${current.getFullYear()}`+"-"+`${current.getMonth()+1}`+"-"+`${current.getDate()}`+"T00:00:00Z&"+"parameterId=temp_mean_past1h"
             try {
                 const response = await axios.get(url)
-                this.singleVejr = await response.data
+                this.vejrDataer = await response.data
             } catch (ex) {
                 alert(ex.message)
             }
         },
-        async addVejr() {
-            console.log(this.addData)
+        async getRegnData() {
+            const current = new Date();
+            const url = "https://dmigw.govcloud.dk/v2/metObs/collections/observation/items?api-key=9c03456a-00ce-48db-a13b-907255c2eb73&stationId=06184&" + `datetime=${current.getFullYear()}`+"-"+`${current.getMonth()+1}`+"-"+`${current.getDate()-1}`+"T00:00:00Z/"+`${current.getFullYear()}`+"-"+`${current.getMonth()+1}`+"-"+`${current.getDate()}`+"T00:00:00Z&"+"parameterId=precip_past1h"
             try {
-                response = await axios.post(baseUrl, this.addData)
-                this.addMessage = "response " + response.status + " " + response.statusText
-                this.getAllVejrDater()
+                const response = await axios.get(url)
+                this.regnData = await response.data
             } catch (ex) {
                 alert(ex.message)
             }
         },
-        async deleteVejrByDato(idToDelete) {
-            const url = baseUrl + "/" + idToDelete
+        async getVindData() {
+            const current = new Date();
+            const url = "https://dmigw.govcloud.dk/v2/metObs/collections/observation/items?api-key=9c03456a-00ce-48db-a13b-907255c2eb73&stationId=06184&" + `datetime=${current.getFullYear()}`+"-"+`${current.getMonth()+1}`+"-"+`${current.getDate()-1}`+"T00:00:00Z/"+`${current.getFullYear()}`+"-"+`${current.getMonth()+1}`+"-"+`${current.getDate()}`+"T00:00:00Z&"+"parameterId=wind_speed"
             try {
-                response = await axios.delete(url)
-                this.deleteMessage = response.status + " " + response.statusText
-                this.getAllVejrDataer()
+                const response = await axios.get(url)
+                this.vindData = await response.data
             } catch (ex) {
                 alert(ex.message)
             }
         },
+        
         async updateParking() {
             console.log(this.updateData)
             const url = baseUrl + "/" + this.idToUpdate
