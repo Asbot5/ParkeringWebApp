@@ -11,12 +11,13 @@ font-family: sans-serif;
 
 .titles{
     text-align: center;
-    margin-bottom: 8%;
+    margin-bottom: 4%;
 }
 
 .parkingList {
     margin: auto;
     border: 2px solid lightgrey;
+    margin-top: 2%;
     padding-top: 4%;
     padding-bottom: 4%;
 }
@@ -32,11 +33,7 @@ font-family: sans-serif;
     background-color: #0F398B;
 }
 
-.footer {
-    height: 30px;
-    width: 100%;
-    text-align: center;
-    color: #808080;
-    position: fixed;
-    bottom: 0;
+.container li h2 {
+    color: #0F398B;
+    margin-bottom: 3%;
 }
