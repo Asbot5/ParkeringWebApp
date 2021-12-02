@@ -10,18 +10,15 @@ Vue.createApp({
             singleParking: null,
             addData: { title: "", price: 0 },
             addMessage: "",
-            idToDelete: null,
-            deleteMessage: "",
-            idToUpdate: null,
-            updateData: { title: "", price: 0 },
-            updateMessage: ""
+            specialParkings: [],
         }
     },
     async created() {
         try {
             const response = await axios.get(baseUrl)
             this.parkings = await response.data
-            console.log(this.parkings)
+            await this.getSpecialParkings()
+            console.log(this.parkings, this.specialParkings)
         } catch (ex) {
             alert(ex.message)
         }
@@ -50,36 +47,10 @@ Vue.createApp({
                 alert(ex.message)
             }
         },
-        async addParking() {
-            console.log(this.addData)
-            try {
-                response = await axios.post(baseUrl, this.addData)
-                this.addMessage = "response " + response.status + " " + response.statusText
-                this.getAllParkings()
-            } catch (ex) {
-                alert(ex.message)
-            }
-        },
-        async deleteParkingById(idToDelete) {
-            const url = baseUrl + "/" + idToDelete
-            try {
-                response = await axios.delete(url)
-                this.deleteMessage = response.status + " " + response.statusText
-                this.getAllParkings()
-            } catch (ex) {
-                alert(ex.message)
-            }
-        },
-        async updateParking() {
-            console.log(this.updateData)
-            const url = baseUrl + "/" + this.idToUpdate
-            try {
-                response = await axios.put(url, this.updateData)
-                this.updateMessage = "response " + response.status + " " + response.statusText
-                this.getAllParkings()
-            } catch (ex) {
-                alert(ex.message)
-            }
+        async getSpecialParkings(){
+            const response1 = await axios.get("https://parkeringsdataapi.azurewebsites.net/parkingdatums/special")
+            this.specialParkings = await response1.data
         }
     }
+    
 }).mount("#app")
