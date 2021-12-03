@@ -6,22 +6,27 @@ Vue.createApp({
     data() {
         return {
             vejrDataer: [],
+            regnData: [],
+            vindData: [],
             specifikVejrDato: null,
             singleVejr: null,
-            addData: { title: "", price: 0 },
-            addMessage: "",
-            idToDelete: null,
-            deleteMessage: "",
-            idToUpdate: null,
-            updateData: { title: "", price: 0 },
-            updateMessage: ""
+            updateMessage: "",
+            dayDate: null,
+            beforeDate: null,
+            monthDate: null,
+            beforeMonth:null,
         }
     },
     async created() {
         try {
-            const response = await axios.get(baseUrl)
-            this.vejrDataer = await response.data
-            console.log(this.vejrDataer)
+            //const response = await axios.get(baseUrl)
+            await this.getDayDate()
+            await this.getMonthDate()
+            await this.getBeforeDate()
+            await this.getTempData()
+            await this.getRegnData()
+            await this.getVindData()
+            console.log(this.vejrDataer, this.regnData, this.beforeDate)
         } catch (ex) {
             alert(ex.message)
         }
@@ -41,34 +46,73 @@ Vue.createApp({
         calculateParkingSpots() {
 
         },
-        async getVejrByDato(id) {
-            const url = baseUrl + "/" + id
+        async getTempData() {
+            const current = new Date();
+            const url = "https://dmigw.govcloud.dk/v2/metObs/collections/observation/items?api-key=9c03456a-00ce-48db-a13b-907255c2eb73&stationId=06184&" + `datetime=${current.getFullYear()}`+"-"+`${this.monthDate}`+"-"+`${this.beforeDate}`+"T00:00:00Z/"+`${current.getFullYear()}`+"-"+`${this.monthDate}`+"-"+`${this.dayDate}`+"T00:00:00Z&"+"parameterId=temp_mean_past1h"
             try {
                 const response = await axios.get(url)
-                this.singleVejr = await response.data
+                this.vejrDataer = await response.data
             } catch (ex) {
                 alert(ex.message)
             }
         },
-        async addVejr() {
-            console.log(this.addData)
+        async getRegnData() {
+            const current = new Date();
+            const url = "https://dmigw.govcloud.dk/v2/metObs/collections/observation/items?api-key=9c03456a-00ce-48db-a13b-907255c2eb73&stationId=06184&" + `datetime=${current.getFullYear()}`+"-"+`${this.monthDate}`+"-"+`${this.beforeDate}`+"T00:00:00Z/"+`${current.getFullYear()}`+"-"+`${this.monthDate}`+"-"+`${this.dayDate}`+"T00:00:00Z&"+"parameterId=precip_past1h"
             try {
-                response = await axios.post(baseUrl, this.addData)
-                this.addMessage = "response " + response.status + " " + response.statusText
-                this.getAllVejrDater()
+                const response = await axios.get(url)
+                this.regnData = await response.data
             } catch (ex) {
                 alert(ex.message)
             }
         },
-        async deleteVejrByDato(idToDelete) {
-            const url = baseUrl + "/" + idToDelete
+        async getVindData() {
+            const current = new Date();
+            const url = "https://dmigw.govcloud.dk/v2/metObs/collections/observation/items?api-key=9c03456a-00ce-48db-a13b-907255c2eb73&stationId=06184&" + `datetime=${current.getFullYear()}`+"-"+`${this.monthDate}`+"-"+`${this.beforeDate}`+"T00:00:00Z/"+`${current.getFullYear()}`+"-"+`${this.monthDate}`+"-"+`${this.dayDate}`+"T00:00:00Z&"+"parameterId=wind_speed"
             try {
-                response = await axios.delete(url)
-                this.deleteMessage = response.status + " " + response.statusText
-                this.getAllVejrDataer()
+                const response = await axios.get(url)
+                this.vindData = await response.data
             } catch (ex) {
                 alert(ex.message)
             }
+        },
+        async getDayDate() {
+            const current = new Date();
+            if(current.getDate()<10){
+                this.dayDate = "0"+current.getDate()
+            }
+            else {
+                this.dayDate = current.getDate()
+              }
+        },
+        async getMonthDate() {
+            const current = new Date();
+            if((current.getMonth()+1)<10){
+                this.monthDate = "0"+current.getMonth()+1
+            }
+            else {
+                this.monthDate = current.getMonth()+1
+              }
+        },
+        async getBeforeDate() {
+            const current = new Date();
+            if(current.getDate()<10){
+                if(current.getDate()==1){
+                    this.beforeMonth = current.getMonth()-1
+                    this.beforeDate = "0"+current.getDate()
+                    if(this.beforeMonth<10){
+                        this.beforeMonth = "0"+(current.getMonth()-1)
+                    }
+                }
+                else{
+                    this.beforeMonth = current.getMonth()
+                    this.beforeDate = "0"+(current.getDate()-1)
+                }
+            }
+            else {
+                this.beforeMonth = current.getMonth()
+                this.beforeDate = current.getDate()
+              }
         },
         async updateParking() {
             console.log(this.updateData)
