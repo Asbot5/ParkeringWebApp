@@ -44,3 +44,14 @@ font-family: sans-serif;
     color: #0F398B;
     margin-bottom: 3%;
 }
+
+.weatherSection {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+}
+
+.weatherSection i {
+    color: #0F398B;
+    font-size: 5em;
+}
