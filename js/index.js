@@ -1,7 +1,37 @@
 // use https (http secure).
 // http (non secure) will make the app complain about mixed content when running the app from Azure
 const baseUrl = "https://parkeringsdataapi.azurewebsites.net/parkingdatums"
+  //seperate from vue
 
+  function openForm() {
+    document.getElementById("myForm").style.display = "block";
+  }
+  
+  function closeForm() {
+    document.getElementById("myForm").style.display = "none";
+  }
+  var map;
+  var directionsManager;
+
+  function GetMap()
+  {
+      map = new Microsoft.Maps.Map('#myMap', {
+          credentials: 'Au62PWvzz40HcbLEKA0BX1gFAkeppzTk6gfLQRKBU9z_-hQG7w-YEzjizb0d_cHX'
+      });
+
+      //Load the directions module.
+      Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
+          //Create an instance of the directions manager.
+          directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
+
+          //Specify where to display the route instructions.
+          directionsManager.setRenderOptions({ itineraryContainer: '#directionsItinerary' });
+
+          //Specify the where to display the input panel
+          directionsManager.showInputPanel('directionsPanel');
+      });
+  }
+  //seperate from vue
 Vue.createApp({
     data() {
         return {
