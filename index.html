@@ -9,20 +9,43 @@
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>
     <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://kit.fontawesome.com/9493c21161.js" crossorigin="anonymous"></script>
     <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
     <title>Parkeringspladser</title>
 </head>
 
 <body>
+    <!--
+    Vejrikoner via Font Awesome
+        <i class="fas fa-cloud"></i> SKYET
+        <i class="fas fa-sun"></i> SOL
+        <i class="fas fa-cloud-rain"></i> REGN
+        <i class="fas fa-cloud-sun"></i> SOLSKY
+        <i class="far fa-snowflake"></i> FROST
+    -->
+
     <div class="topBorder"></div>
 
-    <div id="app" class="container">
+    <div class="container">
         <div class="titles">
             <h1 style="color: #0F398B;">Parkeringsforhold</h1>
             <h3>Ledige parkeringspladser på Zealand Erhvervsakademi</h3>
             <h5>Maglegårdsvej 2, 4000 Roskilde</h5>
         </div>
-        <div class="row">
+
+        <!--<div id="vejrApp" v-for="regn in regnData.features.slice(0,1)" class="weatherSection">
+        <span v-if="regn.properties.value<1">
+            <i class="fas fa-cloud-rain"></i>
+        </span>
+    </div>-->
+
+        <div id="vejrApp" class="weatherSection">
+            <span v-for="vejr in vejrDataer.features.slice(0,1)">
+                <span v-if="regn => 1"><i class="fas fa-cloud-rain"></i> Det regner, flere overvejer nok at tage bilen i dag.</span>
+            </span>
+        </div>
+
+        <div id="app" class="row">
             <ul v-if="parkings" class="parkingList" v-for="parking in parkings">
                 <li>
                     <h2>Parkeringsområde {{parking.id}}</h2>
@@ -77,9 +100,14 @@
             </div>
         </div>
     </div>
+
+    <a href="vejrdata.html"><button>VejrData</button></a>
+
     <a href="visrute.html"><button>Find rute til skole</button></a>
     <a href="vejrdata.html"><button>VejrData</button></a>
+
     <script src="js/index.js"></script>
+    <script src="js/vejrdata.js"></script>
 </body>
 
 </html>
