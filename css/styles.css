@@ -5,7 +5,6 @@ font-family: sans-serif;
 }
 
 .container{
-    width: 50%;
     margin-top: 2%;
 }
 
@@ -15,6 +14,7 @@ font-family: sans-serif;
 }
 
 .parkingList {
+    width: 45%;
     margin: auto;
     border: 2px solid lightgrey;
     margin-top: 2%;
@@ -23,8 +23,15 @@ font-family: sans-serif;
 }
 
 .parkingList li{
+    margin-top: 5%;
+    margin-bottom: 5%;
     font-size: 1.5em;
     list-style-type: none;
+}
+
+.parkingListChild {
+    margin-left: -2.5em;
+    border-top: 2px solid lightgrey;
 }
 
 .topBorder {
