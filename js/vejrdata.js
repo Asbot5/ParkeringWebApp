@@ -40,9 +40,9 @@ Vue.createApp({
                 alert(ex.message)
             }
         },
-        getAllVejrDataer() {
-            this.helperGetAndShow(baseUrl)
-        },
+        //getAllVejrDataer() {
+        //    this.helperGetAndShow(baseUrl2)
+        //},
         calculateParkingSpots() {
 
         },

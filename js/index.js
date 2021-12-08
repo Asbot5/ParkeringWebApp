@@ -3,35 +3,36 @@
 const baseUrl = "https://parkeringsdataapi.azurewebsites.net/parkingdatums"
   //seperate from vue
 
-  function openForm() {
-    document.getElementById("myForm").style.display = "block";
-  }
+  //function openForm() {
+  //  document.getElementById("myForm").style.display = "block";
+  //}
   
-  function closeForm() {
-    document.getElementById("myForm").style.display = "none";
-  }
-  var map;
-  var directionsManager;
+  //function closeForm() {
+  //  document.getElementById("myForm").style.display = "none";
+  //}
+  //var map;
+  //var directionsManager;
 
-  function GetMap()
-  {
-      map = new Microsoft.Maps.Map('#myMap', {
-          credentials: 'Au62PWvzz40HcbLEKA0BX1gFAkeppzTk6gfLQRKBU9z_-hQG7w-YEzjizb0d_cHX'
-      });
+  //function GetMap()
+  //{
+  //    map = new Microsoft.Maps.Map('#myMap', {
+  //        credentials: 'Au62PWvzz40HcbLEKA0BX1gFAkeppzTk6gfLQRKBU9z_-hQG7w-YEzjizb0d_cHX'
+  //    });
 
-      //Load the directions module.
-      Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
-          //Create an instance of the directions manager.
-          directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
+  //    //Load the directions module.
+  //    Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
+  //        //Create an instance of the directions manager.
+  //        directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
 
-          //Specify where to display the route instructions.
-          directionsManager.setRenderOptions({ itineraryContainer: '#directionsItinerary' });
+  //        //Specify where to display the route instructions.
+  //        directionsManager.setRenderOptions({ itineraryContainer: '#directionsItinerary' });
 
-          //Specify the where to display the input panel
-          directionsManager.showInputPanel('directionsPanel');
-      });
-  }
+  //        //Specify the where to display the input panel
+  //        directionsManager.showInputPanel('directionsPanel');
+  //    });
+  //}
   //seperate from vue
+
 Vue.createApp({
     data() {
         return {
@@ -45,7 +46,7 @@ Vue.createApp({
     },
     async created() {
         try {
-            const response = await axios.get(baseUrl)
+            const response = await axios.get("https://parkeringsdataapi.azurewebsites.net/parkingdatums")
             this.parkings = await response.data
             await this.getSpecialParkings()
             console.log(this.parkings, this.specialParkings)
@@ -63,7 +64,7 @@ Vue.createApp({
             }
         },
         getAllParkings() {
-            this.helperGetAndShow(baseUrl)
+            this.helperGetAndShow("https://parkeringsdataapi.azurewebsites.net/parkingdatums")
         },
         calculateParkingSpots() {
 
