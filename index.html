@@ -9,67 +9,90 @@
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>
     <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://kit.fontawesome.com/9493c21161.js" crossorigin="anonymous"></script>
     <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
     <title>Parkeringspladser</title>
 </head>
 
 <body>
+    <!--
+    Vejrikoner via Font Awesome
+        <i class="fas fa-cloud"></i> SKYET
+        <i class="fas fa-sun"></i> SOL
+        <i class="fas fa-cloud-rain"></i> REGN
+        <i class="fas fa-cloud-sun"></i> SOLSKY
+        <i class="far fa-snowflake"></i> FROST
+    -->
+
     <div class="topBorder"></div>
 
-    <div id="app" class="container">
+    <div class="container">
         <div class="titles">
             <h1 style="color: #0F398B;">Parkeringsforhold</h1>
             <h3>Ledige parkeringspladser på Zealand Erhvervsakademi</h3>
             <h5>Maglegårdsvej 2, 4000 Roskilde</h5>
         </div>
-        <div class="row">
+
+        <div id="vejrApp" class="weatherSection">
+            <span>
+                <span v-if="regnData[0] = '1'"><i class="fas fa-cloud-rain"></i> Det regner, flere overvejer nok at tage bilen i dag.</span>
+                <!--<span v-else-if="regnData[0].features.properties.value == 2"><i class="fas fa-cloud"></i> Det er skyet.</span>-->
+            </span>
+        </div>
+
+        <div id="app" class="row">
             <ul v-if="parkings" class="parkingList" v-for="parking in parkings">
                 <li>
                     <h2>Parkeringsområde {{parking.id}}</h2>
                 </li>
-                <li>Ledige pladser<br><i style="color: green; font-size: 1.5em;">{{parking.pladser -
-                        parking.optagedePladser}}</i></li>
-                <li>Optagede pladser<br> <i style="color: lightgrey; font-size: 1.5em;">{{parking.optagedePladser}}</i>
-                </li>
+
+                <li>Ledige pladser<br><i style="color: green; font-size: 1.5em;">{{parking.pladser - parking.optagedePladser}}</i></li>
+                <li>Optagede pladser<br> <i style="color: lightgrey; font-size: 1.5em;">{{parking.optagedePladser}}</i></li>
 
                 <ul v-if="parking.id==1" class="parkingListChild" v-for="special in specialParkings.slice(0,3)">
-                    <li v-if="special.parkeringsType==0">Ledige <u>Handicap</u> pladser<br><i
-                            style="color: green; font-size: 1.5em;">{{special.pladser - special.optagedePladser}}</i>
+                    <li v-if="special.parkeringsType==0">
+                        Ledige <u>Handicap</u> pladser<br><i style="color: green; font-size: 1.5em;">{{special.pladser - special.optagedePladser}}</i>
                     </li>
-                    <li v-if="special.parkeringsType==0">Optagede Handicap pladser<br> <i
-                            style="color: lightgrey; font-size: 1.5em;">{{special.optagedePladser}}</i></li>
+                    <li v-if="special.parkeringsType==0">
+                        Optagede Handicap pladser<br> <i style="color: lightgrey; font-size: 1.5em;">{{special.optagedePladser}}</i>
+                    </li>
 
-                    <li v-if="special.parkeringsType==1">Ledige <u>Motorcykel</u> pladser<br><i
-                            style="color: green; font-size: 1.5em;">{{special.pladser - special.optagedePladser}}</i>
+                    <li v-if="special.parkeringsType==1">
+                        Ledige <u>Motorcykel</u> pladser<br><i style="color: green; font-size: 1.5em;">{{special.pladser - special.optagedePladser}}</i>
                     </li>
-                    <li v-if="special.parkeringsType==1">Optagede Motorcykel pladser<br> <i
-                            style="color: lightgrey; font-size: 1.5em;">{{special.optagedePladser}}</i></li>
+                    <li v-if="special.parkeringsType==1">
+                        Optagede Motorcykel pladser<br> <i style="color: lightgrey; font-size: 1.5em;">{{special.optagedePladser}}</i>
+                    </li>
 
-                    <li v-if="special.parkeringsType==2">Ledige <u>Elbil</u> pladser<br><i
-                            style="color: green; font-size: 1.5em;">{{special.pladser - special.optagedePladser}}</i>
+                    <li v-if="special.parkeringsType==2">
+                        Ledige <u>Elbil</u> pladser<br><i style="color: green; font-size: 1.5em;">{{special.pladser - special.optagedePladser}}</i>
                     </li>
-                    <li v-if="special.parkeringsType==2">Optagede Elbil pladser<br> <i
-                            style="color: lightgrey; font-size: 1.5em;">{{special.optagedePladser}}</i></li>
+                    <li v-if="special.parkeringsType==2">
+                        Optagede Elbil pladser<br> <i style="color: lightgrey; font-size: 1.5em;">{{special.optagedePladser}}</i>
+                    </li>
                 </ul>
 
                 <ul v-if="parking.id==2" class="parkingListChild" v-for="special in specialParkings.slice(3,6)">
-                    <li v-if="special.parkeringsType==0">Ledige <u>Handicap</u> pladser<br><i
-                            style="color: green; font-size: 1.5em;">{{special.pladser - special.optagedePladser}}</i>
+                    <li v-if="special.parkeringsType==0">
+                        Ledige <u>Handicap</u> pladser<br><i style="color: green; font-size: 1.5em;">{{special.pladser - special.optagedePladser}}</i>
                     </li>
-                    <li v-if="special.parkeringsType==0">Optagede Handicap pladser<br> <i
-                            style="color: lightgrey; font-size: 1.5em;">{{special.optagedePladser}}</i></li>
+                    <li v-if="special.parkeringsType==0">
+                        Optagede Handicap pladser<br> <i style="color: lightgrey; font-size: 1.5em;">{{special.optagedePladser}}</i>
+                    </li>
 
-                    <li v-if="special.parkeringsType==1">Ledige <u>Motorcykel</u> pladser<br><i
-                            style="color: green; font-size: 1.5em;">{{special.pladser - special.optagedePladser}}</i>
+                    <li v-if="special.parkeringsType==1">
+                        Ledige <u>Motorcykel</u> pladser<br><i style="color: green; font-size: 1.5em;">{{special.pladser - special.optagedePladser}}</i>
                     </li>
-                    <li v-if="special.parkeringsType==1">Optagede Motorcykel pladser<br> <i
-                            style="color: lightgrey; font-size: 1.5em;">{{special.optagedePladser}}</i></li>
+                    <li v-if="special.parkeringsType==1">
+                        Optagede Motorcykel pladser<br> <i style="color: lightgrey; font-size: 1.5em;">{{special.optagedePladser}}</i>
+                    </li>
 
-                    <li v-if="special.parkeringsType==2">Ledige <u>Elbil</u> pladser<br><i
-                            style="color: green; font-size: 1.5em;">{{special.pladser - special.optagedePladser}}</i>
+                    <li v-if="special.parkeringsType==2">
+                        Ledige <u>Elbil</u> pladser<br><i style="color: green; font-size: 1.5em;">{{special.pladser - special.optagedePladser}}</i>
                     </li>
-                    <li v-if="special.parkeringsType==2">Optagede Elbil pladser<br> <i
-                            style="color: lightgrey; font-size: 1.5em;">{{special.optagedePladser}}</i></li>
+                    <li v-if="special.parkeringsType==2">
+                        Optagede Elbil pladser<br> <i style="color: lightgrey; font-size: 1.5em;">{{special.optagedePladser}}</i>
+                    </li>
                 </ul>
             </ul>
             <div v-else>
@@ -77,9 +100,11 @@
             </div>
         </div>
     </div>
+
     <a href="visrute.html"><button>Find rute til skole</button></a>
     <a href="vejrdata.html"><button>VejrData</button></a>
     <script src="js/index.js"></script>
+    <script src="js/vejrdata.js"></script>
 </body>
 
 </html>

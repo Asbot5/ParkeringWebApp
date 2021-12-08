@@ -1,7 +1,6 @@
 // use https (http secure).
 // http (non secure) will make the app complain about mixed content when running the app from Azure
 const baseUrl = "https://parkeringsdataapi.azurewebsites.net/parkingdatums"
-  //seperate from vue
 
   function openForm() {
     document.getElementById("myForm").style.display = "block";
@@ -31,7 +30,7 @@ const baseUrl = "https://parkeringsdataapi.azurewebsites.net/parkingdatums"
           directionsManager.showInputPanel('directionsPanel');
       });
   }
-  //seperate from vue
+
 Vue.createApp({
     data() {
         return {
@@ -45,7 +44,7 @@ Vue.createApp({
     },
     async created() {
         try {
-            const response = await axios.get(baseUrl)
+            const response = await axios.get("https://parkeringsdataapi.azurewebsites.net/parkingdatums")
             this.parkings = await response.data
             await this.getSpecialParkings()
             console.log(this.parkings, this.specialParkings)
@@ -63,7 +62,7 @@ Vue.createApp({
             }
         },
         getAllParkings() {
-            this.helperGetAndShow(baseUrl)
+            this.helperGetAndShow("https://parkeringsdataapi.azurewebsites.net/parkingdatums")
         },
         calculateParkingSpots() {
 
