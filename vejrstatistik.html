@@ -12,11 +12,64 @@
 </head>
 <body>
     <div id="app" class="container">
-        <input type="date" class="form-control" v-model="selectDate"> {{selectDate}}
-        <input type="date" class="form-control" v-model="selectDate2"> {{selectDate2}}
-        <button id="GetTemp" v-on:click="getTempData()">Get Temp Data</button>
-        <button id="GetRegn" v-on:click="getRegnData()">Get Regn Data</button>
-        <button id="GetVind" v-on:click="getVindData()">Get Vind Data</button>
+        <!--<input type="date" class="form-control" v-model="selectDate"> {{selectDate}}-->
+        <!--<input type="date" class="form-control" v-model="selectDate2"> {{selectDate2}}-->
+        <br>
+        <p>Indsæt den første dato og områdeid(1 eller 2) du vil sammenligne med</p>
+        <input type="date" id="id" v-model="selectDate1">
+        <input type="number"  v-model="selectArea1">
+        <br>
+        <p>Indsæt den anden dato og områdeid(1 eller 2) du vil sammenligne med</p>
+        <input type="date" id="id2" v-model="selectDate2">
+        <input type="number"  v-model="selectArea2">
+        <br>
+        <button id="GetStat" v-on:click="getStatistik() && getTempData() && getRegnData() && getVindData()">Get Statistic</button>
+        <br>
+        <div class="container">
+            <!-- Viser statistik data fra vores database. -->
+            <table class="table-striped table-bordered table-hover" v-if="statLength1>0">
+                <thead>
+                    <tr>
+                        <td>Dato</td>
+                        <td>Parkeringsområde</td>
+                        <th>Mængde af Biler</th>
+                        <th>Nedbør</th>
+                        <th>Temperatur</th>
+                        <th>Vindhastighed</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>{{selectDate1}}</td>
+                    <td>{{selectArea1}}</td>
+                    <td>{{statLength1}}</td>
+                    <td v-for="regn in regnData1.features.slice(0,1)">{{regn.properties.value}}mm</td>
+                    <td v-for="temp in tempData1.features.slice(0,1)">{{temp.properties.value}}°C</td>
+                    <td v-for="vind in vindData1.features.slice(0,1)">{{vind.properties.value}}m/s</td>
+                </tr>
+            </table>
+            <br>
+            <table class="table-striped table-bordered table-hover" v-if="statLength2>0">
+                <thead>
+                    <tr>
+                        <td>Dato</td>
+                        <td>Parkeringsområde</td>
+                        <th>Mængde af Biler</th>
+                        <th>Nedbør</th>
+                        <th>Temperatur</th>
+                        <th>Vindhastighed</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>{{selectDate2}}</td>
+                    <td>{{selectArea2}}</td>
+                    <td>{{statLength2}}</td>
+                    <td v-for="regn in regnData2.features.slice(0,1)">{{regn.properties.value}}mm</td>
+                    <td v-for="temp in tempData2.features.slice(0,1)">{{temp.properties.value}}°C</td>
+                    <td v-for="vind in vindData2.features.slice(0,1)">{{vind.properties.value}}m/s</td>
+                </tr>
+            </table>
+        </div>
+        
     </div>
 <script src="js/vejrstatistik.js"></script>
 </body>
