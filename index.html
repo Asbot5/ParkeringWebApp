@@ -15,6 +15,15 @@
 </head>
 
 <body>
+    <!--
+    Vejrikoner via Font Awesome
+        <i class="fas fa-cloud"></i> SKYET
+        <i class="fas fa-sun"></i> SOL
+        <i class="fas fa-cloud-rain"></i> REGN
+        <i class="fas fa-cloud-sun"></i> SOLSKY
+        <i class="far fa-snowflake"></i> FROST
+    -->
+
     <div class="topBorder"></div>
 
     <div class="container">
@@ -23,17 +32,7 @@
             <h3>Ledige parkeringspladser på Zealand Erhvervsakademi</h3>
             <h5>Maglegårdsvej 2, 4000 Roskilde</h5>
         </div>
-
-        <div id="vejrApp" class="weatherSection">
-            <span>
-                <span v-if="regnData[0].features.properties.value === 1"><i class="fas fa-cloud-rain"></i> Det regner, flere overvejer nok at tage bilen i dag.</span>
-                <!--<span v-else-if="regnData[0].features.properties.value == 2"><i class="fas fa-cloud"></i> Det er skyet.</span>-->
-            </span>
-        </div>
-
-
-
-        <div id="app" class="row">
+        <div class="row">
             <ul v-if="parkings" class="parkingList" v-for="parking in parkings">
                 <li>
                     <h2>Parkeringsområde {{parking.id}}</h2>
@@ -87,9 +86,11 @@
             </div>
         </div>
     </div>
+
+    <a href="vejrdata.html"><button>VejrData</button></a>
+
     <a href="visrute.html"><button>Find rute til skole</button></a>
     <a href="vejrdata.html"><button>VejrData</button></a>
-    
     <script src="js/index.js"></script>
     <script src="js/vejrdata.js"></script>
 </body>
