@@ -47,6 +47,17 @@ height:100%;
     margin-bottom: 3%;
 }
 
+.weatherSection {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+}
+
+.weatherSection i {
+    color: #0F398B;
+    font-size: 5em;
+}
+
 body {font-family: Arial, Helvetica, sans-serif;}
 * {box-sizing: border-box;}
 

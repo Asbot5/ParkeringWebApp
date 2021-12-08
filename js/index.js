@@ -30,7 +30,6 @@ const baseUrl = "https://parkeringsdataapi.azurewebsites.net/parkingdatums"
           directionsManager.showInputPanel('directionsPanel');
       });
   }
-  seperate from vue
 
 Vue.createApp({
     data() {
