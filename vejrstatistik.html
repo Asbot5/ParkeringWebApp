@@ -11,28 +11,67 @@
     <title>Vejr Statistik</title>
 </head>
 <body>
+        <div class="topBorder"></div>
+
     <div id="app" class="container">
+        
+        <div class="titles">
+            <h1 style="color: #0F398B;">Vejrstatistik</h1>
+            <h3>Her samles vejrstatistik, så bilister kan tage stilling til antal ledige parkeringspladser.</h3>
+        </div>
+
         <!--<input type="date" class="form-control" v-model="selectDate"> {{selectDate}}-->
         <!--<input type="date" class="form-control" v-model="selectDate2"> {{selectDate2}}-->
         <br>
-        <p>Indsæt den første dato og områdeid(1 eller 2) du vil sammenligne med</p>
-        <input type="date" id="id" v-model="selectDate1">
-        <input type="number"  v-model="selectArea1">
+        <p style="color: #0F398B; font-size: 1.2em;">Vælg dato og parkeringsområde (1 eller 2)</p>
+        <form class="radioForm">
+            <input type="date" id="id" v-model="selectDate1">
+            <br><br>
+                <fieldset id="group1">
+                    <label>Område 1
+                        <input type="radio" checked="checked" name="group1" v-model="selectArea1" value="1">
+                            <span class="checkmark"></span>
+                    </label>
+                    <br>
+                    <label>Område 2
+                        <input type="radio" name="group1" v-model="selectArea1" value="2">
+                            <span class="checkmark"></span>
+                    </label>
+                </fieldset>
+        </form>
+
         <br>
-        <p>Indsæt den anden dato og områdeid(1 eller 2) du vil sammenligne med</p>
-        <input type="date" id="id2" v-model="selectDate2">
-        <input type="number"  v-model="selectArea2">
+
+        <p style="color: #0F398B; font-size: 1.2em;">Vælg anden dato og parkeringsområde (1 eller 2) du vil sammenligne med</p>
+        <form class="radioForm">
+            <input type="date" id="id2" v-model="selectDate2">
+            <br><br>
+                <fieldset id="group2">
+                    <label>Område 1
+                        <input type="radio" checked="checked" name="group2" v-model="selectArea2" value="1">
+                            <span class="checkmark"></span>
+                    </label>
+                    <br>
+                    <label>Område 2
+                        <input type="radio" name="group2" v-model="selectArea2" value="2">
+                            <span class="checkmark"></span>
+                    </label>
+                </fieldset>
+        </form>
+
         <br>
-        <button id="GetStat" v-on:click="getStatistik() && getTempData() && getRegnData() && getVindData()">Get Statistic</button>
+
+        <button id="GetStat" class="statButton" v-on:click="getStatistik() && getTempData() && getRegnData() && getVindData()">Hent statistik</button>
         <br>
+
         <div class="container">
             <!-- Viser statistik data fra vores database. -->
-            <table class="table-striped table-bordered table-hover" v-if="statLength1>0">
+            <table class="table-striped table-bordered" v-if="statLength1>0">
                 <thead>
                     <tr>
                         <td>Dato</td>
                         <td>Parkeringsområde</td>
-                        <th>Mængde af Biler</th>
+                        <th>Antal biler</th>
                         <th>Nedbør</th>
                         <th>Temperatur</th>
                         <th>Vindhastighed</th>
@@ -46,14 +85,23 @@
                     <td v-for="temp in tempData1.features.slice(0,1)">{{temp.properties.value}}°C</td>
                     <td v-for="vind in vindData1.features.slice(0,1)">{{vind.properties.value}}m/s</td>
                 </tr>
+
+                <tr v-if="statLength2>0">
+                    <td>{{selectDate2}}</td>
+                    <td>{{selectArea2}}</td>
+                    <td>{{statLength2}}</td>
+                    <td v-for="regn in regnData2.features.slice(0,1)">{{regn.properties.value}}mm</td>
+                    <td v-for="temp in tempData2.features.slice(0,1)">{{temp.properties.value}}°C</td>
+                    <td v-for="vind in vindData2.features.slice(0,1)">{{vind.properties.value}}m/s</td>
+                </tr>
             </table>
             <br>
-            <table class="table-striped table-bordered table-hover" v-if="statLength2>0">
+            <!--<table class="table-striped table-bordered" v-if="statLength2>0">
                 <thead>
                     <tr>
                         <td>Dato</td>
                         <td>Parkeringsområde</td>
-                        <th>Mængde af Biler</th>
+                        <th>Antal biler</th>
                         <th>Nedbør</th>
                         <th>Temperatur</th>
                         <th>Vindhastighed</th>
@@ -67,7 +115,7 @@
                     <td v-for="temp in tempData2.features.slice(0,1)">{{temp.properties.value}}°C</td>
                     <td v-for="vind in vindData2.features.slice(0,1)">{{vind.properties.value}}m/s</td>
                 </tr>
-            </table>
+            </table>-->
         </div>
         
     </div>

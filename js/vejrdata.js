@@ -6,7 +6,7 @@ Vue.createApp({
     data() {
         return {
             vejrDataer: [],
-            regnData: [],
+            regnData: null,
             vindData: [],
             specifikVejrDato: null,
             singleVejr: null,

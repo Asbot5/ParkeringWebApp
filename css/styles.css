@@ -58,6 +58,28 @@ height:100%;
     font-size: 5em;
 }
 
+button {
+    padding: 12px 12px;
+    background-color: #0F398B;
+    color: #fff;
+    border-color: #fff;
+    border-radius: 5px;
+    transition-duration: .2s;
+}
+
+button:hover{
+    background-color: #1f6bff;
+}
+
+.radioForm label{
+    font-size: 1.2em;
+}
+
+table {
+    width: 100%;
+    margin: auto;
+}
+
 body {font-family: Arial, Helvetica, sans-serif;}
 * {box-sizing: border-box;}
 

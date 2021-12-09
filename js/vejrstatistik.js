@@ -95,7 +95,12 @@ Vue.createApp({
                 day = d.getDate();
                     if (day <10){
                         day = 0+day
-                    }
+            }
+            if (this.selectArea1 == null)
+            {
+                this.selectArea1 = 1;
+            }
+
                 const url1 = "https://parkeringsdataapi.azurewebsites.net/Log/statistic/"+`${this.selectArea1}`+"/"+`${month}`+"-"+`${day}`+"-"+`${year}`
 
                 var input = document.getElementById( 'id2' ).value;
@@ -108,7 +113,10 @@ Vue.createApp({
                     day = d2.getDate();
                         if (day <10){
                             day = 0+day
-                        }
+            }
+            if (this.selectArea2 == null) {
+                this.selectArea2 = 1;
+            }
                     const url2 = "https://parkeringsdataapi.azurewebsites.net/Log/statistic/"+`${this.selectArea2}`+"/"+`${month}`+"-"+`${day}`+"-"+`${year}`
             try {
                 const response = await axios.get(url1)
